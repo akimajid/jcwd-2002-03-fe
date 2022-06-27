@@ -183,6 +183,7 @@ const login = () => {
             onClick={formik.handleSubmit}
             type="submit"
             disabled={formik.isSubmitting}
+            isLoading={formik.isSubmitting}
           >
             Masuk
           </Button>
