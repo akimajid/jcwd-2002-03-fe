@@ -1,5 +1,5 @@
 import { ChakraProvider } from "@chakra-ui/react"
-import { Provider } from "react-redux";
+import { Provider } from "react-redux"
 import theme from "../styles/extendTheme/theme"
 import NavBar from "../component/navbar/NavBar"
 import BottomNavBar from "../component/bottomNavBar/BottomNavbar"
