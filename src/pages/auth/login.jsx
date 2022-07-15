@@ -72,15 +72,16 @@ const login = () => {
           const userResponse = res.data.result;
           //   console.log(userResponse);
 
-          jsCookies.set("user_token", userResponse.token);
+          // jsCookies.set("user_token", userResponse.token);
 
           const userResponseAdded = { ...userResponse.user };
+          const stringifyAdmin = JSON.stringify(res.data.result.user);
+          jsCookies.set("user_token", res.data.result.token);
+          localStorage.setItem("user", stringifyAdmin);
 
           dispatch(signin(userResponseAdded));
-
           formik.setSubmitting(false);
         } catch (err) {
-          console.log(err);
           toast({
             title: "Login failed",
             description: "Wrong email or password",
@@ -97,7 +98,7 @@ const login = () => {
     if (authSelector.id) {
       router.push("/");
     }
-  }, [authSelector.id]);
+  }, [authSelector]);
 
   return (
     <Grid templateColumns="repeat(2,1fr)" margin="auto" width="100%">

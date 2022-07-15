@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Box, Button, Checkbox, Divider, FormControl, FormHelperText, FormLabel, Grid, GridItem, Icon, Img, Input, InputGroup, InputLeftElement, InputRightElement, Stack, Text, useToast } from "@chakra-ui/react"
+import { Box, Button, Checkbox, Divider, FormControl, FormHelperText, FormLabel, Grid, GridItem, Icon, Img, Input, InputGroup, InputLeftElement, InputRightElement, Spinner, Stack, Text, useToast } from "@chakra-ui/react"
 import { FcGoogle } from "react-icons/fc"
 import { MdEmail } from "react-icons/md"
 import { IoIosLock } from "react-icons/io"
@@ -50,10 +50,10 @@ const login = () => {
                         });
                     }
 
-                    const stringifyToken = JSON.stringify(res.data.result.token);
                     const stringifyAdmin = JSON.stringify(res.data.result.user);
-                    jsCookie.set("user_token", stringifyToken)
-                    localStorage.setItem("admin", stringifyAdmin)
+                    jsCookie.set("user_token", res.data.result.token)
+                    localStorage.setItem("user", stringifyAdmin)
+
                     dispatch(signin(res.data.result.user))
                     formik.setSubmitting(false);
 
@@ -83,14 +83,28 @@ const login = () => {
             router.push("/admin/admin-dashboard")
         }
     }, [authSelector])
+
+    if (authSelector.role) {
+        return <Spinner thickness='4px'
+            speed='0.65s'
+            emptyColor='gray.200'
+            color='blue.500'
+            size='xl'
+            display="flex"
+            mt="10px"
+            mb="auto"
+            ml="auto"
+            mr="auto"
+        />
+    }
     return (
         <Grid templateColumns="repeat(2,1fr)" margin="auto" width="100%" height="100vh">
             <GridItem display={["none", "grid", "grid"]} colSpan={[0, 1, 1]} background="linear-gradient(142.04deg, rgba(254, 254, 254, 0) -1.93%, #E4F4F8 107.32%)">
                 <Img src="/login_image.svg" />
             </GridItem>
-            <GridItem colSpan={[2, 1, 1]} alignItems="center" mt={[4]}>
+            <GridItem colSpan={[2, 1, 1]} alignItems="center" mt={[4]} display="flex" justifyContent="center">
                 <Box width={["90%", "80%"]} margin="auto">
-                    <Stack spacing={["12px", "16px"]}>
+                    <Stack spacing={["12px", "16px"]} mb="30px">
                         < Box >
                             <Text variant="title" display={["none", "block", "block"]}>Masuk</Text>
                         </Box>
